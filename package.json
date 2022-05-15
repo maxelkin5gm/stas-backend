@@ -1,0 +1,39 @@
+{
+  "name": "stas-backend",
+  "version": "0.0.1",
+  "private": true,
+  "main": "electron-build/electron/main.js",
+  "scripts": {
+    "start": "nest start --debug --watch",
+    "start:nest": "npm run build:electron && node electron-build/electron/main.js",
+    "start:electron": "npm run build:electron && cross-env ELECTRON=true electron .",
+    "build": "rimraf electron-build && npm run build:react && npm run build:electron",
+    "build:electron": "rimraf electron-build/electron && nest build",
+    "build:react": "rimraf electron-build/react && cd ../stas-frontend && npm run build",
+    "package": "npm run build && electron-builder"
+  },
+  "dependencies": {
+    "@nestjs/common": "^8.0.0",
+    "@nestjs/core": "^8.0.0",
+    "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/serve-static": "^2.2.2",
+    "dotenv": "^16.0.1",
+    "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2",
+    "rxjs": "^7.2.0"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^8.0.0",
+    "@nestjs/schematics": "^8.0.0",
+    "@types/express": "^4.17.13",
+    "@types/node": "^16.0.0",
+    "cross-env": "^7.0.3",
+    "electron": "^18.2.3",
+    "electron-builder": "^23.0.3",
+    "source-map-support": "^0.5.20",
+    "ts-loader": "^9.2.3",
+    "ts-node": "^10.0.0",
+    "tsconfig-paths": "4.0.0",
+    "typescript": "^4.3.5"
+  }
+}
