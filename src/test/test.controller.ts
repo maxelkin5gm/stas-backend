@@ -1,13 +1,21 @@
 import {Controller, Get} from '@nestjs/common';
+import {InjectRepository} from '@nestjs/typeorm';
 import {TestService} from './test.service';
+import {TestEntity} from "../entities/Test.entity";
+import {DataSource, Repository} from "typeorm";
 
 @Controller()
 export class TestController {
-    constructor(private readonly testService: TestService) {
+    constructor(private readonly testService: TestService,
+                @InjectRepository(TestEntity)
+                private testRepository: Repository<TestEntity>,
+                private dataSource: DataSource) {
     }
 
     @Get()
-    home(): string {
+    async home() {
+        await this.testRepository.findBy({})
+        await this.dataSource.getRepository(TestEntity).findBy({})
         return this.testService.getHello();
     }
 
