@@ -2,10 +2,11 @@ import { app, Tray, Menu, nativeImage, Notification, shell } from 'electron';
 
 export class ElectronApp {
   private static tray: Tray;
+  private static app = app;
 
   static start() {
     return new Promise((resolve) => {
-      app.on('ready', () => {
+      this.app.on('ready', () => {
         this.createTray();
         new Notification({ title: 'Приложение запущено', body: 'Получить доступ можно через значок в трее' }).show();
         resolve(null);
@@ -23,13 +24,13 @@ export class ElectronApp {
       {
         label: 'Открыть приложение',
         type: 'normal',
-        click: () => shell.openExternal('http://localhost:' + (process.env.PORT || 5000)),
+        click: () => shell.openExternal('http://localhost:' + (process.env.PORT || 3000)),
       },
-      { label: 'Выйти', type: 'normal', click: () => app.quit() },
+      { label: 'Выйти', type: 'normal', click: () => this.app.quit() },
     ]);
 
     this.tray.on('click', () => {
-      shell.openExternal('http://localhost:' + (process.env.PORT || 5000));
+      shell.openExternal('http://localhost:' + (process.env.PORT || 3000));
     });
 
 
