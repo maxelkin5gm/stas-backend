@@ -14,9 +14,7 @@ export class TestController {
 
     @Get()
     async home() {
-        await this.testRepository.findBy({})
-        await this.dataSource.getRepository(TestEntity).findBy({})
-        return this.testService.getHello();
+        return await this.dataSource.query('SELECT name FROM STO')
     }
 
     @Get('api')
